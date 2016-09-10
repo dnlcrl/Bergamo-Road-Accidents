@@ -1,13 +1,13 @@
 # Bergamo Accidents
 
 
-Animation of Bergamo's Accidents Data using D3 and Leaflet
+Animation of Bergamo's Accidents Data using D3 and Leaflet (in action at: https://dnlcrl.github.io/Bergamo-Accidents/)
 
 ![https://github.com/dnlcrl/Bergamo-Accidents/blob/master/docs/incidenti.gif](https://github.com/dnlcrl/Bergamo-Accidents/blob/master/docs/incidenti.gif)
 
 ### Data provided by the [City of Bergamo](https://www.dati.lombardia.it/Mobilit-e-trasporti/Comune-Bergamo-Incidenti-stradali/hds3-pqjq)
 
-### See it Live at: WIP
+### See it Live at [dnlcrl.github.io/Bergamo-Accidents/](https://dnlcrl.github.io/Bergamo-Accidents/)
 
 ====
 
