@@ -1,6 +1,5 @@
 # Bergamo Accidents
 
-================
 
 Animation of Bergamo's Accidents Data using D3 and Leaflet
 
