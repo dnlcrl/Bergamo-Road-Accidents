@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bergamo Accidents Data (January 2002 thru December 31th 2015)</title>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <script src="http://mbostock.github.com/d3/d3.v2.js?2.8.1"></script>
+    <script src="http://lully.snv.jussieu.fr/gbif/mapping/jqueries/leaflet-src.js"></script>
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+        #header {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: sans-serif;
+            font-size: 35px;
+            padding: 10px;
+            background: #444;
+            //width: 612px;
+            color: #ffffff;
+            text-align: left;
+            padding-right: 40px;
+            border: 2px solid #ddd;
+        }
+        #timestamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-family: sans-serif;
+            font-size: 35px;
+            padding: 10px;
+            background: #444;
+            width: 291px;
+            color: #ffffff;
+            text-align: right;
+            padding-right: 40px;
+            border: 2px solid #ddd;
+        }
+        #footer {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-family: sans-serif;
+            font-size: 13px;
+            padding: 10px;
+            background: #444;
+            width: auto;
+            color: #ffffff;
+            text-align: left;
+            margin-right: 10px;
+            border: 2px solid #ddd;
+        }
+        #key {
+            left: 10px;
+            font-family: sans-serif;
+            font-size: 18px;
+            padding: 10px;
+            background: #444;
+            color: #ffffff;
+            text-align: left;
+            border: 2px solid #ddd;
+            position: absolute;
+            top: 87px;
+            height: 100px;
+            width: 117px;
+        }
+        #graphs {
+            left: 10px;
+            font-family: sans-serif;
+            font-size: 18px;
+            padding: 10px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+            background: #444;
+            color: #ffffff;
+            text-align: left;
+            border: 2px solid #ddd;
+            position: absolute;
+            top: 227px;
+            max-height: 300px;
+            width: 425px;
+            overflow-y: scroll;
+        }
+        a,
+        a:hover,
+        a:visited {
+            color: #38F7FF;
+        }
+        p {
+            display: inline-block;
+            margin-top: 1px;
+            position: relative;
+            top: -2px;
+            margin-left: 8px;
+        }
+        circle {
+            fill-opacity: 0.6;
+        }
+    </style>
+    <script type="text/javascript" src="js/paper.js"></script>
+</head>
+
+<body>
+
+    <div id="map" style="width: 100%; height: 100%;position:relative"></div>
+    <div id="timestamp"></div>
+    <div id="header">Bergamo Accidents Data Animation</div>
+    <div id="key">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
+            <circle cx="8" cy="8" r="8" fill="red" />
+        </svg>
+        <p>Mortal</p>
+        <br>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
+            <circle cx="8" cy="8" r="8" fill="yellow" />
+        </svg>
+        <p>Injuries</p>
+        <br>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
+            <circle cx="8" cy="8" r="8" fill="green" />
+        </svg>
+        <p>No Injuries</p>
+    </div>
+    <div id="graphs">
+        <p>
+            <script type="text/javascript" canvas="graph">
+                function checkInp(x) {
+                    if (parseInt(x) < 2002)
+                        return (2002).toString()
+
+                    if (parseInt(x) > 2015)
+                        return (2015).toString()
+
+                    return x
+                }
+
+
+                var app = {};
+                app.n_morti = 0;
+                app.n_feriti = 0;
+                app.n_illesi = 0;
+                app.numFrames = 366;
+                app.count = 0;
+                app.days = 0;
+                app.graph = 0;
+
+                var qs = (function(a) {
+                    if (a == "") return {};
+                    var b = {};
+                    for (var i = 0; i < a.length; ++i) {
+                        var p = a[i].split('=', 2);
+                        if (p.length == 1)
+                            b[p[0]] = "";
+                        else
+                            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                    }
+                    return b;
+                })(window.location.search.substr(1).split('&'));
+
+                app.startingDate = qs["start"] || "2002";
+                app.endingDate = qs["end"] || "2015";
+                if (isNaN(app.startingDate)) {
+                    app.startingDate = "2002";
+                }
+                if (parseInt(app.startingDate) > 2015) {
+
+                }
+                if (isNaN(app.endingDate)) {
+                    app.endingDate = "2015";
+                }
+                app.startingDate = checkInp(app.startingDate);
+                app.endingDate = checkInp(app.endingDate);
+                app.year = parseInt(app.startingDate);
+                app.graphnum = 1 + parseInt(app.endingDate) - parseInt(app.startingDate);
+            </script>
+
+            <script type="text/paperscript" src="js/sat.js" canvas="graph">
+            </script>
+            <center>
+                <canvas id="graph" width="520"></canvas>
+            </center>
+            <script type="text/javascript">
+                var canvas = document.getElementById('graph');
+
+                canvas.height = app.graphnum * 95 + 10;
+                var header = document.getElementById('header');
+                header.innerHTML = header.innerHTML + " (Jan " + app.startingDate + " - Dec " + app.endingDate + ")";
+            </script>
+        </p>
+
+    </div>
+    <div id="footer">By <a href="https://twitter.com/dnlcrl">@dnlcrl</a>| Data provided by the <a href="https://www.dati.lombardia.it/Mobilit-e-trasporti/Comune-Bergamo-Incidenti-stradali/hds3-pqjq">City of Bergamo</a> | Support Open Data! | Inspired by <a href="https://gist.github.com/ZJONSSON/3087431">Ziggy Jonsson</a>| <a href="">Code on Github</a>
+    </div>
+    <script type="text/javascript">
+        //var cloudmadeUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        var cloudmadeUrl = 'https://api.tiles.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZG5sY3JsIiwiYSI6ImNpc3ZqN3Z5eTAwMGwyeXBkNjRuZGp1Z3cifQ.nJnL0cy_q54VTHIzJVlctw',
+            // var cloudmadeUrl = 'https://{s}.tiles.mapbox.com/v3/socrata.i4068jp1/{z}/{x}/{y}.png',
+            cloudmadeAttribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a>",
+            cloudmade = new L.TileLayer(cloudmadeUrl, {
+                maxZoom: 18,
+                attribution: cloudmadeAttribution
+            });
+
+        var map = new L.Map('map', {
+            center: new L.LatLng(45.693177, 9.6319844, 6),
+            zoom: 13,
+            layers: [cloudmade]
+        });
+
+        /* Initialize the SVG layer */
+        map._initPathRoot()
+
+        /* We simply pick up the SVG from the map object */
+        var svg = d3.select("#map").select("svg"),
+            g = svg.append("g");
+
+        if (parseInt(app.startingDate) > 2015 && parseInt(app.startingDate) < 2002) {
+            console.log("starting date error, choose between 2002 and 2015");
+        }
+
+        if (parseInt(app.endingDate) > 2015 && parseInt(app.endingDate) < 2002) {
+            console.log("ending date error, choose between 2002 and 2015");
+        }
+        startTime = new Date("01/01/" + app.startingDate).getTime() / 1000;
+        endTime = new Date("12/31/" + app.endingDate).getTime() / 1000;
+
+
+        d3.csv("data/inc.csv", function(collection) {
+            /* Add a LatLng object to each item in the dataset */
+            collection.forEach(function(d) {
+                d.LatLng = new L.LatLng(d.LAT, d.LNG)
+            });
+
+
+
+            var date2002 = 1009843200;
+            var time = startTime; //2002
+            var previousTime;
+            var timer1;
+            var timer2;
+
+
+            var filtered = collection.filter(function(d) {
+                return (d.UnixDate > startTime) //<2002
+            });
+
+
+            function update() {
+                app.n_morti = 0;
+                app.n_feriti = 0;
+                app.n_illesi = 0;
+                app.count += 1;
+
+                previousTime = time;
+                time = time + 86400;
+
+                showDateTime(time);
+
+                //console.log(time);
+                grab = collection.filter(function(d) {
+                    return (d.UnixDate < time) && (d.UnixDate > previousTime);
+                });
+                //filtered = filtered.concat(grab);
+                filtered = grab;
+                //console.log(filtered);
+                var feature = g.selectAll("circle")
+                    .data(filtered, function(d) {
+                        return d.Key;
+                    });
+                feature.enter().append("circle").attr("fill", function(d) {
+                    if (d.N_Morti > 0) {
+                        app.n_morti += 1;
+                        return "red";
+                    }
+                    if (d.N_Feriti > 0) {
+                        app.n_feriti += 1;
+                        return "yellow";
+                    }
+                    app.n_illesi += 1;
+                    return "green";
+
+                }).attr("r", 0).transition().duration(100).attr("r", function(d) {
+                    return map.getZoom();
+                });
+
+                feature.exit().transition().duration(250).attr("r", 0).remove();
+
+                feature.attr("cx", function(d) {
+                    return map.latLngToLayerPoint(d.LatLng).x
+                });
+                feature.attr("cy", function(d) {
+                    return map.latLngToLayerPoint(d.LatLng).y
+                });
+                //setTimeout(update, 100);
+
+                //stopTimers();
+                if (document.hasFocus()) {
+                    if (time < endTime) {
+                        timer1 = setTimeout(update, 100);
+
+                    }
+
+                } else {
+                    app.playing = false;
+                    timer2 = setTimeout(checkFocus, 100);
+                }
+
+
+            }
+
+            function checkFocus() {
+                //stopTimers();
+                if (document.hasFocus()) {
+                    app.playing = true;
+                    timer1 = setTimeout(update, 100);
+                } else {
+                    timer2 = setTimeout(checkFocus, 100);
+                }
+            }
+
+            function stopTimers() {
+                clearInterval(timer1);
+                clearInterval(timer2);
+            }
+
+            function showDateTime(unixtime) {
+                var newDate = new Date();
+                newDate.setTime(unixtime * 1000);
+                if (newDate.getFullYear() > app.year) {
+                    app.year = newDate.year;
+                    app.graph += 1;
+                    app.initDynamicElements();
+                    app.count = 0;
+                }
+                dateString = newDate.toString();
+                dateString = dateString.slice(0, 16);
+                document.getElementById("timestamp").innerHTML = dateString;
+            }
+
+            update();
+
+
+
+
+        });
+    </script>
+</body>
+
+</html>
