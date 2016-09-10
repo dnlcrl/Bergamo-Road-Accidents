@@ -4,9 +4,9 @@
 <head>
     <title>Bergamo Accidents Data (January 2002 thru December 31th 2015)</title>
 
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
-    <script src="http://mbostock.github.com/d3/d3.v2.js?2.8.1"></script>
-    <script src="http://lully.snv.jussieu.fr/gbif/mapping/jqueries/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <script src="https://mbostock.github.com/d3/d3.v2.js?2.8.1"></script>
+    <script src="https://lully.snv.jussieu.fr/gbif/mapping/jqueries/leaflet-src.js"></script>
     <style type="text/css">
         html,
         body {
@@ -112,17 +112,17 @@
     <div id="timestamp"></div>
     <div id="header">Bergamo Accidents Data Animation</div>
     <div id="key">
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
+        <svg xmlns="https://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
             <circle cx="8" cy="8" r="8" fill="red" />
         </svg>
         <p>Mortal</p>
         <br>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
+        <svg xmlns="https://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
             <circle cx="8" cy="8" r="8" fill="yellow" />
         </svg>
         <p>Injuries</p>
         <br>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
+        <svg xmlns="https://www.w3.org/2000/svg" version="1.1" style="width:16px; height:16px">
             <circle cx="8" cy="8" r="8" fill="green" />
         </svg>
         <p>No Injuries</p>
@@ -198,7 +198,7 @@
     <div id="footer">By <a href="https://twitter.com/dnlcrl">@dnlcrl</a> | Data provided by the <a href="https://www.dati.lombardia.it/Mobilit-e-trasporti/Comune-Bergamo-Incidenti-stradali/hds3-pqjq">City of Bergamo</a> | Support Open Data! | <a href="">Code on Github</a>
     </div>
     <script type="text/javascript">
-        //var cloudmadeUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        //var cloudmadeUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         var cloudmadeUrl = 'https://api.tiles.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZG5sY3JsIiwiYSI6ImNpc3ZqN3Z5eTAwMGwyeXBkNjRuZGp1Z3cifQ.nJnL0cy_q54VTHIzJVlctw',
             // var cloudmadeUrl = 'https://{s}.tiles.mapbox.com/v3/socrata.i4068jp1/{z}/{x}/{y}.png',
             cloudmadeAttribution = "<a href='https://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a>",
