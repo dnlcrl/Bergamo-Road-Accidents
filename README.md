@@ -1,4 +1,4 @@
-# Bergamo Accidents
+# Bergamo Road Accidents Data Animation
 
 ![https://github.com/dnlcrl/Bergamo-Accidents/blob/master/docs/incidenti.gif](https://github.com/dnlcrl/Bergamo-Road-Accidents/blob/master/docs/incidenti.gif)
 
