@@ -4,7 +4,7 @@
 
 Animation of Bergamo's Accidents Data using D3 and Leaflet (in action at: https://dnlcrl.github.io/Bergamo-Road-Accidents/)
 
-You can set the starting and ending year by passing them to the URL query string parameters ```start``` and ```end``` (2002 <= year <= 2015, e.g. https://dnlcrl.github.io/Bergamo-Accidents/?start=2013&end=2015)
+You can set the starting and ending year by passing them to the URL query string parameters ```start``` and ```end``` (2002 <= year <= 2015, e.g. https://dnlcrl.github.io/Bergamo-Road-Accidents/?start=2013&end=2015)
 
 ====
 
