@@ -8,6 +8,8 @@ You can set the starting and ending year by passing them to the URL query string
 
 ====
 
+Presentation: [https://drive.google.com/open?id=0B8T8Fw0kS2GbaTRDb243cnRfZVk](https://drive.google.com/open?id=0B8T8Fw0kS2GbaTRDb243cnRfZVk)
+
 Data provided by the [City of Bergamo](https://www.dati.lombardia.it/Mobilit-e-trasporti/Comune-Bergamo-Incidenti-stradali/hds3-pqjq)
 
 Inspired by: http://chriswhong.com/open-data/some-viz-phillys-stolen-bicycles/
